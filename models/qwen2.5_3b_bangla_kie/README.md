@@ -34,17 +34,18 @@ This is a fine-tuned PEFT LoRA adapter for **[Qwen/Qwen2.5-3B-Instruct](https://
 
 ---
 
-## 🌟 Empirical Fine-Tuning Performance (Kaggle T4 GPUs)
+## 🌟 Evaluation on Initial Test Slice (n=5 Documents, 62 Fields)
 
-Evaluated on authentic Bengali transactional documents before vs. after QLoRA fine-tuning:
+Evaluated on an initial sample of 5 synthetic test documents across Utility Bills, Shop Invoices, and MFS Receipts:
 
-| Evaluation Domain | Base Model (Qwen 2.5-3B Zero-Shot) | Fine-Tuned Model (This Adapter) | Improvement |
-| :--- | :---: | :---: | :---: |
-| **Overall Field Accuracy** | **41.9%** (22/63 fields) | **60.9%** (matched fields) | **+19.0%** 🚀 |
-| **MFS Receipts (bKash / Nagad)** | 7/12 fields matched | **9/12 fields matched** | **+16.7%** |
-| **Utility Bills (DESCO / DPDC)** | 5/14 fields recovered | **14/14 fields recovered with valid spans** | **+64.3%** |
-| **JSON Schema & Syntax Validity** | Frequent formatting breakdown | **100% Valid JSON Structure** | **Flawless** |
-| **Character-Exact Span Grounding** | Omitted offsets or hallucinated | **Exact substring slices matching OCR text** | **Verified Provenance** |
+| Document | Type | Base Model (Value-Correct) | Fine-Tuned (Value-Correct) | Base Model (Span-Valid) | Fine-Tuned (Span-Valid) |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Doc 1** | Utility Bill (DESCO / DPDC) | 5 / 14 | 3 / 14 | 12 / 14 | 14 / 14 |
+| **Doc 2** | Shop Invoice (Shwapno) | 3 / 11 | 2 / 11 | 12 / 12 | 12 / 12 |
+| **Doc 3** | Shop Invoice (Local POS) | 4 / 11 | 5 / 11 | 12 / 12 | 12 / 12 |
+| **Doc 4** | MFS Receipt (bKash) | 7 / 12 | 9 / 12 | 12 / 12 | 12 / 12 |
+| **Doc 5** | Utility Bill (WASA / NESCO) | 7 / 14 | 7 / 14 | 14 / 14 | 14 / 14 |
+| **Total** | **All 5 Docs (n=5)** | **26 / 62 (41.9%)** | **26 / 62 (41.9%)** | **62 / 64 (96.9%)** | **64 / 64 (100.0%)** |
 
 ---
 

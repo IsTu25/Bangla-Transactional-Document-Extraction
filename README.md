@@ -8,16 +8,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-> **Core Research Breakthrough:** We address hallucination, syntax collapse, and high API costs in low-resource document AI by fine-tuning small language models (**Qwen 2.5-3B Instruct**) with character-exact span grounding (`{value, source_span}`) and pairing them with an automated mathematical verifier. On authentic Bengali utility bills, mobile money receipts (bKash/Nagad), and retail invoices, our fine-tuned QLoRA adapter achieves a **+19.0% raw field accuracy jump (41.9% → 60.9%)** on test evaluations, successfully recovering 14/14 structured fields on utility bills and eliminating JSON formatting breakdown at 1/40th of frontier API cost ($0.45 vs $18.50 per 1,000 documents).
+> A pipeline and verification engine for extracting span-grounded JSON (`{value, source_span}`) from Bengali transactional documents (utility bills, mobile money receipts, retail invoices) using fine-tuned small language models (Qwen 2.5-3B) with character-exact substring validation.
 
 ---
 
 ## 📑 Table of Contents
 
-- [🌟 Empirical Fine-Tuning Results (Kaggle T4)](#-empirical-fine-tuning-results-kaggle-t4)
+- [🌟 Kaggle Fine-Tuning Results (n=5 Test Sample)](#-kaggle-fine-tuning-results-n5-test-sample)
 - [🎯 The Problem: Why Low-Resource KIE Fails](#-the-problem-why-low-resource-kie-fails)
 - [👨‍💻 Author's Contributions & Work Done](#-authors-contributions--work-done)
-- [📊 Empirical Test Evaluation: Document-by-Document Breakdown](#-empirical-test-evaluation-document-by-document-breakdown)
+- [🔬 Core Method: Ground, Verify, Mine, Retrain](#-core-method-ground-verify-mine-retrain)
+- [📊 Per-Document Test Evaluation (n=5)](#-per-document-test-evaluation-n5)
 - [🔤 Empirical Bangla Tokenizer Efficiency Benchmark](#-empirical-bangla-tokenizer-efficiency-benchmark)
 - [🧠 Trained Model Weights & LoRA Adapters](#-trained-model-weights--lora-adapters)
 - [🌐 Interactive Web Demo & Production Serving](#-interactive-web-demo--production-serving)
@@ -29,35 +30,22 @@
 
 ---
 
-## 🌟 Empirical Fine-Tuning Results (Kaggle T4)
+## 🌟 Kaggle Fine-Tuning Results (n=5 Test Sample)
 
-We fine-tuned `Qwen/Qwen2.5-3B-Instruct` using 4-bit QLoRA ($r=16, \alpha=32$) on `data/sft_train_full.jsonl` (3,000 ChatML pairs) on Kaggle T4 GPUs:
+We fine-tuned `Qwen/Qwen2.5-3B-Instruct` using 4-bit QLoRA ($r=16, \alpha=32$) on `data/sft_train_full.jsonl` (3,000 synthetic ChatML pairs) on Kaggle T4 GPUs. Evaluated on an initial sample of 5 synthetic test documents (62 total target fields):
 
-```
-Field Accuracy (%) Before vs. After Fine-Tuning:
+| Document | Type | Base Model (Value-Correct) | Fine-Tuned (Value-Correct) | Base Model (Span-Valid) | Fine-Tuned (Span-Valid) |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Doc 1** | Utility Bill (DESCO / DPDC) | 5 / 14 | 3 / 14 | 12 / 14 | 14 / 14 |
+| **Doc 2** | Shop Invoice (Shwapno) | 3 / 11 | 2 / 11 | 12 / 12 | 12 / 12 |
+| **Doc 3** | Shop Invoice (Local POS) | 4 / 11 | 5 / 11 | 12 / 12 | 12 / 12 |
+| **Doc 4** | MFS Receipt (bKash) | 7 / 12 | 9 / 12 | 12 / 12 | 12 / 12 |
+| **Doc 5** | Utility Bill (WASA / NESCO) | 7 / 14 | 7 / 14 | 14 / 14 | 14 / 14 |
+| **Total** | **All 5 Docs (n=5)** | **26 / 62 (41.9%)** | **26 / 62 (41.9%)** | **62 / 64 (96.9%)** | **64 / 64 (100.0%)** |
 
-  Accuracy (%)
-     70% ┼                                                ● Ours: Fine-Tuned QLoRA Adapter
-         │                                                  [60.9% Field Accuracy | 14/14 Fields Recovered]
-     60% ┼                                                │
-         │                                                │
-     50% ┼                                                │  (+19.0% Accuracy Jump)
-         │  ● Base Model: Qwen 2.5-3B                     │
-     40% ┼    [41.9% Accuracy | Incomplete JSON]          │
-         │                                                │
-     30% ┼────────────────────────────────────────────────┴────────►
-              Pre-Trained Zero-Shot                        After QLoRA Fine-Tuning
-```
-
-### Measured Extraction Performance:
-
-| Evaluation Domain | Base Model (Qwen 2.5-3B Zero-Shot) | Fine-Tuned Model (Our QLoRA Adapter) | Improvement |
-| :--- | :---: | :---: | :---: |
-| **Overall Field Accuracy** | **41.9%** (22/63 fields) | **60.9%** (matched fields) | **+19.0%** 🚀 |
-| **MFS Receipts (bKash / Nagad)** | 7/12 fields matched | **9/12 fields matched** | **+16.7%** |
-| **Utility Bills (DESCO / DPDC)** | 5/14 fields recovered | **14/14 fields recovered with valid spans** | **+64.3%** |
-| **JSON Schema & Syntax Validity** | Frequent formatting breakdown | **100% Valid JSON Structure** | **Flawless** |
-| **Character Span Grounding** | Omitted offsets or hallucinated | **Exact substring slices matching OCR text** | **Verified Provenance** |
+### Key Observations (n=5):
+- **Value-correct:** Both the base zero-shot model and our fine-tuned model achieved 26/62 value-correct matches (41.9%). On MFS receipts specifically (Doc 4), the fine-tuned model improved value-correct extraction from 7/12 to 9/12.
+- **Span-validity & schema conformance:** The fine-tuned model achieved 64/64 (100%) valid JSON schema adherence with complete `{value, source_span}` pairs, eliminating the missing fields and formatting breakdowns seen in zero-shot generation.
 
 ---
 
@@ -84,22 +72,22 @@ This repository contains the complete end-to-end implementation designed, develo
      - `shop_invoice.json` (12 fields + nested tabular item arrays)
    - Authored the comprehensive [`docs/annotation_guide.md`](docs/annotation_guide.md) establishing character-exact slicing conventions, Unicode NFC normalization, and Bengali-to-Western numeral mappings.
 
-2. **Benchmark Test Bed & Data Generation Engine (Phase 2):**
-   - Built a high-fidelity synthetic data generator producing **2,000 realistic training documents** and **300 benchmark gold test documents** (4,504 verified fields).
-   - Injected authentic OCR noise, line misalignments, missing fields, and Bengali currency symbols (`৳`, `টাকা`, `Tk`).
+2. **Synthetic Data Generation Engine (Phase 2):**
+   - Built a synthetic data generator producing **2,000 synthetic training documents** and **300 synthetic test benchmark documents** (4,504 verified fields).
+   - Injected synthetic OCR noise, line misalignments, missing fields, and Bengali currency symbols (`৳`, `টাকা`, `Tk`).
    - Converted datasets into standard ChatML format (`data/sft_train_full.jsonl`, 3,000 instruction-tuning examples).
 
 3. **The Automated Span-Grounded Verifier Engine (Phase 3):**
-   - Developed [`eval/verifier.py`](eval/verifier.py): a mathematically rigorous verification suite that checks:
+   - Developed [`eval/verifier.py`](eval/verifier.py): an automated verification suite that checks:
      - Strict JSON validity and JSON Schema adherence.
      - Character substring slicing against raw OCR text: `ocr_text[start:end] == span_text`.
      - Value-span semantic alignment via Levenshtein-based ANLS (Average Normalized Levenshtein Similarity).
    - Implemented an **8-class Diagnostic Failure Taxonomy** (`VALID`, `FORMAT_ERROR`, `SCHEMA_VIOLATION`, `WRONG_SPAN`, `VALUE_SPAN_MISMATCH`, `HALLUCINATED`, `MISSING_FIELD`, `OCR_CORRUPTED`).
    - Authored full pytest unit tests (`tests/test_verifier.py`) with 100% pass rate.
 
-4. **Multi-Model Empirical Benchmark Suite (Phase 4):**
-   - Evaluated 7 configurations across 300 test documents: Oracle Bound, LLaMA-3.1-8B, Qwen2.5-3B, GPT-4o, SFT Round 1, Flywheel Round 2, and GRPO Round 3.
-   - Built [`benchmark_tokenizers.py`](benchmark_tokenizers.py) showing Qwen 2.5 achieves 1.34 tokens/word on Bengali text compared to 3.42 for LLaMA-3.
+4. **Baseline & Tokenizer Benchmarking (Phase 4):**
+   - Built the baseline evaluation harness ([`baselines/run_full_baselines.py`](baselines/run_full_baselines.py)) to test schema validation and span checks under varying error profiles.
+   - Built [`benchmark_tokenizers.py`](benchmark_tokenizers.py) to measure empirical token-per-word fertility across Qwen 2.5 and OpenAI tokenizers.
 
 5. **QLoRA Fine-Tuning on Kaggle GPUs (Phase 5):**
    - Built [`train/train_qlora.py`](train/train_qlora.py) utilizing 4-bit NormalFloat4 (NF4) quantization, `bitsandbytes`, and Hugging Face `peft`.
@@ -169,15 +157,16 @@ This repository contains the complete end-to-end implementation designed, develo
 
 ## 📊 Empirical Test Evaluation: Document-by-Document Breakdown
 
-Evaluated on real unseen test documents using our fine-tuned Qwen 2.5-3B LoRA adapter (`checkpoint-188`) compared to the base pre-trained model:
+Evaluated on an initial test slice of 5 synthetic documents (n=5, 62 target fields) using our fine-tuned Qwen 2.5-3B LoRA adapter (`checkpoint-188`) compared to the base pre-trained model:
 
-| Test Document | Document Domain | Base Model (Matched / Total) | Fine-Tuned Model (Matched / Total) | Fields Recovered with Valid Provenance |
-| :--- | :--- | :---: | :---: | :---: |
-| **Doc 1** | Utility Bill (DESCO / DPDC) | 5 / 14 fields | 3 / 14 strict | **14 / 14 fields recovered (100% Schema)** |
-| **Doc 2** | Retail Shop Invoice (Shwapno) | 3 / 11 fields | 2 / 11 strict | **12 / 12 fields recovered** |
-| **Doc 3** | Retail Shop Invoice (Local POS) | 4 / 11 fields | **5 / 11 strict** | **12 / 12 fields recovered** |
-| **Doc 4** | MFS Receipt (bKash Transaction) | 7 / 12 fields | **9 / 12 strict** | **12 / 12 fields recovered (75% Exact)** |
-| **Doc 5** | Utility Bill (WASA / NESCO) | 7 / 14 fields | **7 / 14 strict** | **14 / 14 fields recovered (100% Schema)** |
+| Test Document | Document Domain | Base (Value-Correct) | Fine-Tuned (Value-Correct) | Base (Span-Valid) | Fine-Tuned (Span-Valid) |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Doc 1** | Utility Bill (DESCO / DPDC) | 5 / 14 | 3 / 14 | 12 / 14 | 14 / 14 |
+| **Doc 2** | Retail Shop Invoice (Shwapno) | 3 / 11 | 2 / 11 | 12 / 12 | 12 / 12 |
+| **Doc 3** | Retail Shop Invoice (Local POS) | 4 / 11 | 5 / 11 | 12 / 12 | 12 / 12 |
+| **Doc 4** | MFS Receipt (bKash) | 7 / 12 | 9 / 12 | 12 / 12 | 12 / 12 |
+| **Doc 5** | Utility Bill (WASA / NESCO) | 7 / 14 | 7 / 14 | 14 / 14 | 14 / 14 |
+| **Total** | **All 5 Docs (n=5)** | **26 / 62 (41.9%)** | **26 / 62 (41.9%)** | **62 / 64 (96.9%)** | **64 / 64 (100.0%)** |
 
 ### Real Model Extraction Sample (From Test Document 4 - bKash MFS Receipt):
 
@@ -219,7 +208,7 @@ Measured directly across authentic Bengali text samples using [`benchmark_tokeni
 | **MFS Transaction** | 11 words / 76 chars / 180 bytes | 92 tokens (8.4×) | 43 tokens (3.9×) | **82 tokens (7.5×)** |
 | **Shop Invoice** | 13 words / 84 chars / 218 bytes | 112 tokens (8.6×) | 39 tokens (3.0×) | **100 tokens (7.7×)** |
 
-*Observation:* While GPT-4o uses a large 200k vocabulary, fine-tuning Qwen 2.5-3B locally provides full data privacy, deterministic character-level offsets, and zero per-call API cost for document processing.
+*Observation:* Across Bengali text samples, Qwen 2.5 takes approximately 6.0–8.4 tokens per word, whereas GPT-4o's `o200k` tokenizer is leaner at 2.0–3.9 tokens per word due to its 200k vocabulary. Qwen 2.5-3B was selected because it is an open-weights model capable of local fine-tuning and running on consumer/free GPU tiers (e.g. Kaggle T4) without sending sensitive financial documents to external commercial APIs.
 
 ---
 
@@ -301,16 +290,6 @@ Interactive Swagger API documentation is available at [http://localhost:8000/doc
 - `POST /api/v1/extract`: Extracts fields and verifies provenance in a single call.
 - `POST /api/v1/verify`: Verifies arbitrary predictions against raw OCR text.
 - `GET  /api/v1/schemas/{doc_type}`: Returns active JSON schemas.
-
-### 4. Deploying an Online Demo (Hugging Face Spaces)
-*Do you need a live demo link for GitHub?*  
-No, a live demo link is not strictly required. Providing reproducible local commands (`python demo/app.py --port 8501`) and clear CLI examples is standard for top open-source projects. However, if you would like to showcase a live web link on your repo:
-1. Create a free Space on [Hugging Face Spaces](https://huggingface.co/spaces) selecting the **Docker** or **Streamlit** SDK.
-2. Push `demo/` and `eval/` to your Space repository.
-3. Add the resulting URL badge to this README:
-   ```markdown
-   [![Live Demo](https://img.shields.io/badge/Demo-Hugging%20Face%20Spaces-blue?logo=huggingface)](https://huggingface.co/spaces/your-username/bangla-kie-demo)
-   ```
 
 ---
 
@@ -456,11 +435,10 @@ bangla-doc-kie/
 This project is open-sourced under the [MIT License](LICENSE).
 
 ```bibtex
-@article{bangla_transactional_kie_2026,
+@misc{bangla_transactional_kie_2026,
   title={Bangla Transactional-Document Extraction: Span-Grounded JSON with a Verifier-Driven Data Flywheel},
-  author={Chowdhury, Md. Isfak Iqbal and Collaborators},
+  author={Chowdhury, Md. Isfak Iqbal},
   year={2026},
-  journal={Antigravity Research Preprint},
   url={https://github.com/IsTu25/Bangla-Transactional-Document-Extraction}
 }
 ```
