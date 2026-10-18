@@ -1,0 +1,51 @@
+<!-- Label Studio Configuration for Bangla Document KIE (Text Span Annotation) -->
+<View>
+  <Header value="Bangla Transactional Document - Key Information Extraction" />
+
+  <!-- Document Meta Information -->
+  <Text name="doc_meta" value="Document Type: $document_type | ID: $doc_id | OCR Engine: $ocr_engine" />
+
+  <View style="display: flex; gap: 20px;">
+    <!-- Left Column: Raw Bengali OCR Text with Span Labeling -->
+    <View style="flex: 60%; max-height: 700px; overflow-y: auto; padding: 12px; border: 1px solid #ddd; background: #fafafa; font-family: 'Noto Sans Bengali', sans-serif; font-size: 16px; line-height: 1.8;">
+      <Labels name="field_label" toName="ocr_text">
+        <!-- Common Transaction Fields -->
+        <Label value="biller_name" background="#4F46E5" />
+        <Label value="customer_name" background="#2563EB" />
+        <Label value="customer_account_no" background="#0284C7" />
+        <Label value="bill_number" background="#0D9488" />
+        <Label value="meter_number" background="#059669" />
+        <Label value="bill_month" background="#16A34A" />
+        <Label value="issue_date" background="#65A30D" />
+        <Label value="due_date" background="#D97706" />
+        <Label value="total_amount_due" background="#DC2626" />
+        <Label value="late_amount_due" background="#E11D48" />
+        <Label value="vat_amount" background="#9333EA" />
+
+        <!-- MFS Specific Fields -->
+        <Label value="provider_name" background="#C026D3" />
+        <Label value="transaction_type" background="#DB2777" />
+        <Label value="transaction_id" background="#E11D48" />
+        <Label value="recipient_name" background="#EA580C" />
+        <Label value="recipient_mobile" background="#D97706" />
+        <Label value="amount" background="#16A34A" />
+        <Label value="charge" background="#059669" />
+        <Label value="total_amount" background="#0284C7" />
+
+        <!-- Retail POS Invoice Fields -->
+        <Label value="merchant_name" background="#2563EB" />
+        <Label value="outlet_address" background="#4F46E5" />
+        <Label value="invoice_number" background="#7C3AED" />
+        <Label value="invoice_date" background="#9333EA" />
+      </Labels>
+
+      <Text name="ocr_text" value="$ocr_text" />
+    </View>
+
+    <!-- Right Column: Normalized Canonical Value Inputs (Optional override) -->
+    <View style="flex: 40%; max-height: 700px; overflow-y: auto; padding: 12px; border: 1px solid #ddd;">
+      <Header value="Canonical Normalized Values" size="5" />
+      <TextArea name="normalized_notes" toName="ocr_text" placeholder="Add normalization notes if Bengali digits differ from western numbers (e.g. ১২৫০ -> 1250.0)" rows="4" />
+    </View>
+  </View>
+</View>
