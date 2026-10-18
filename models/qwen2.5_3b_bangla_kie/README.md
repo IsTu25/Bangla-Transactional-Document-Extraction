@@ -1,62 +1,114 @@
 ---
 base_model: Qwen/Qwen2.5-3B-Instruct
 library_name: peft
-model_name: qwen2.5_3b_bangla_kie
+model_name: bangla-kie-qwen2.5-3b-adapter
 tags:
 - base_model:adapter:Qwen/Qwen2.5-3B-Instruct
 - lora
+- peft
 - sft
-- transformers
-- trl
-licence: license
+- bengali
+- bangla
+- document-information-extraction
+- key-information-extraction
+- span-grounding
+- transactional-documents
+license: mit
 pipeline_tag: text-generation
+language:
+- bn
+- en
 ---
 
-# Model Card for qwen2.5_3b_bangla_kie
+# Bangla KIE: Span-Grounded Key Information Extraction (Qwen 2.5-3B Adapter)
 
-This model is a fine-tuned version of [Qwen/Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct).
-It has been trained using [TRL](https://github.com/huggingface/trl).
+This is a fine-tuned PEFT LoRA adapter for **[Qwen/Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct)** specialized in Key Information Extraction (KIE) from low-resource Bengali transactional documents (Utility Bills, Mobile Financial Services receipts, and Retail POS Invoices).
 
-## Quick start
+- **GitHub Repository:** [IsTu25/Bangla-Transactional-Document-Extraction](https://github.com/IsTu25/Bangla-Transactional-Document-Extraction)
+- **Base Model:** Qwen/Qwen2.5-3B-Instruct
+- **Adapter Type:** QLoRA (Rank $r=16, \alpha=32$)
+- **Domain Coverage:**
+  - **Utility Bills (14 fields):** DESCO, DPDC, TITAS Gas, Dhaka WASA, NESCO
+  - **MFS Receipts (12 fields):** bKash, Nagad, Rocket, Upay
+  - **Shop Invoices (12 fields + Tabular Items):** Supermarkets (Shwapno, Agora, Unimart), Chaldal, Retail POS
+
+---
+
+## 🌟 Benchmark Performance
+
+Evaluated against 300 authentic documents (4,504 fields) comparing against zero-shot frontier models:
+
+| Model | Schema Conformance | Macro Field F1 | ANLS | Hallucination Rate |
+| :--- | :---: | :---: | :---: | :---: |
+| LLaMA 3.1-8B (Zero-Shot) | 62.7% | 76.7% | 0.808 | 7.88% |
+| Qwen 2.5-3B (Zero-Shot) | 75.0% | 84.1% | 0.878 | 5.02% |
+| GPT-4o (Zero-Shot) | 84.7% | 89.8% | 0.938 | 2.75% |
+| **This Model (Fine-Tuned + Verifier Flywheel)** | **99.0%** | **94.2%** | **0.993** | **<0.24%** |
+
+---
+
+## 🚀 How to Use
 
 ```python
-from transformers import pipeline
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
 
-question = "If you had a time machine, but could only go to the past or the future once and never return, which would you choose and why?"
-generator = pipeline("text-generation", model="None", device_map="auto")
-output = generator([{"role": "user", "content": question}], max_new_tokens=128, return_full_text=False)[0]
-print(output["generated_text"])
+base_model_id = "Qwen/Qwen2.5-3B-Instruct"
+adapter_id = "isfakturjoy/bangla-kie-qwen2.5-3b-adapter"
+
+# 1. Load Base Model & Tokenizer
+tokenizer = AutoTokenizer.from_pretrained(adapter_id, trust_remote_code=True)
+base_model = AutoModelForCausalLM.from_pretrained(
+    base_model_id,
+    torch_dtype=torch.bfloat16,
+    device_map="auto",
+    trust_remote_code=True,
+)
+
+# 2. Attach Adapter
+model = PeftModel.from_pretrained(base_model, adapter_id)
+model.eval()
+
+# 3. Format Prompt (ChatML)
+ocr_text = """ঢাকা ইলেকট্রিক সাপ্লাই কোম্পানি লিমিটেড (ডেসকো)
+বিদ্যুৎ বিল - নভেম্বর ২০২৪
+বিল নম্বর: ১২৮৯৭৬৫৪
+গ্রাহকের নাম: মোঃ রফিকুল ইসলাম
+মোট বর্তমান প্রদেয় টাকা: ৪,১০০.০০"""
+
+prompt = f"""<|im_start|>system
+You are an expert Document Information Extraction AI specialized in Bangla transactional documents. Extract key fields as valid JSON matching the utility_bill schema. Every field must contain 'value' and exact verbatim 'source_span' with start, end, and text offsets.<|im_end|>
+<|im_start|>user
+Document Type: utility_bill
+Document Text:
+{ocr_text}<|im_end|>
+<|im_start|>assistant
+"""
+
+inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+with torch.no_grad():
+    output_tokens = model.generate(
+        **inputs,
+        max_new_tokens=1024,
+        temperature=0.1,
+        do_sample=False,
+        pad_token_id=tokenizer.eos_token_id,
+    )
+
+response = tokenizer.decode(output_tokens[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
+print(response)
 ```
 
-## Training procedure
+---
 
- 
+## 📜 Citation
 
-
-
-This model was trained with SFT.
-
-### Framework versions
-
-- PEFT 0.20.0
-- TRL: 1.16.0
-- Transformers: 5.16.1
-- Pytorch: 2.11.0+cu128
-- Datasets: 4.8.5
-- Tokenizers: 0.23.1
-
-## Citations
-
-
-
-Cite TRL as:
-    
 ```bibtex
-@software{vonwerra2020trl,
-  title   = {{TRL: Transformers Reinforcement Learning}},
-  author  = {von Werra, Leandro and Belkada, Younes and Tunstall, Lewis and Beeching, Edward and Thrush, Tristan and Lambert, Nathan and Huang, Shengyi and Rasul, Kashif and Gallouédec, Quentin},
-  license = {Apache-2.0},
-  url     = {https://github.com/huggingface/trl},
-  year    = {2020}
+@article{bangla_transactional_kie_2026,
+  title={Bangla Transactional-Document Extraction: Span-Grounded JSON with a Verifier-Driven Data Flywheel},
+  author={Chowdhury, Md. Isfak Iqbal and Collaborators},
+  year={2026},
+  url={https://github.com/IsTu25/Bangla-Transactional-Document-Extraction}
 }
 ```
