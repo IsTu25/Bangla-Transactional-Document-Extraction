@@ -2,7 +2,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![Hugging Face PEFT](https://img.shields.io/badge/Hugging%20Face-PEFT%20%7C%20LoRA-FFD21E.svg?logo=huggingface&logoColor=black)](https://huggingface.co/)
+[![Hugging Face Model](https://img.shields.io/badge/Hugging%20Face-Adapter%20Weights-FFD21E.svg?logo=huggingface&logoColor=black)](https://huggingface.co/isfakturjoy/bangla-kie-qwen2.5-3b-adapter)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Tests: Pytest Passing](https://img.shields.io/badge/pytest-8%20passed%20(100%25)-success.svg?logo=pytest&logoColor=white)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -224,18 +224,17 @@ base_model = AutoModelForCausalLM.from_pretrained(
     trust_remote_code=True,
 )
 
-# 2. Attach trained Bangla KIE LoRA Adapter
-adapter_path = "models/qwen2.5_3b_bangla_kie"
+# 2. Attach trained Bangla KIE LoRA Adapter (from local path or Hugging Face Hub)
+adapter_path = "isfakturjoy/bangla-kie-qwen2.5-3b-adapter"  # Or local: "models/qwen2.5_3b_bangla_kie"
 model = PeftModel.from_pretrained(base_model, adapter_path)
 model.eval()
 
 print("✅ Fine-tuned Bangla KIE model loaded successfully!")
 ```
 
-> **📌 Note on GitHub File Size Limits:** GitHub enforces a 100 MB hard limit on individual files in git repositories (which is why `.gitignore` excludes `*.zip` and optimizer checkpoints). You can either:
-> 1. Keep the weights locally in `models/qwen2.5_3b_bangla_kie/`.
-> 2. Publish the adapter directly to the Hugging Face Model Hub (`huggingface-cli upload your-username/bangla-kie-qwen2.5-3b-adapter ./models/qwen2.5_3b_bangla_kie`).
-> 3. Attach `output/bangla_kie_qwen3b_adapter.zip` to your GitHub repository's **Releases** tab.
+> **🤗 Hugging Face Model Hub:**  
+> The trained adapter is published and available at **[isfakturjoy/bangla-kie-qwen2.5-3b-adapter](https://huggingface.co/isfakturjoy/bangla-kie-qwen2.5-3b-adapter)**.  
+> The archive package is also preserved locally at [`output/bangla_kie_qwen3b_adapter.zip`](output/bangla_kie_qwen3b_adapter.zip).
 
 ---
 
@@ -319,8 +318,8 @@ Every field is extracted as a grounded pair:
 ### 1. Environment Setup
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/bangla-doc-kie.git
-cd bangla-doc-kie
+git clone https://github.com/IsTu25/Bangla-Transactional-Document-Extraction.git
+cd Bangla-Transactional-Document-Extraction
 
 # Create virtual environment
 python3 -m venv .venv
@@ -433,6 +432,6 @@ This project is open-sourced under the [MIT License](LICENSE).
   author={Chowdhury, Md. Isfak Iqbal and Collaborators},
   year={2026},
   journal={Antigravity Research Preprint},
-  url={https://github.com/your-username/bangla-doc-kie}
+  url={https://github.com/IsTu25/Bangla-Transactional-Document-Extraction}
 }
 ```
