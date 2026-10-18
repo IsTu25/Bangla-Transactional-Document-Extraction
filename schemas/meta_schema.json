@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "meta_schema.json",
+  "title": "SpanGroundedFieldMetaSchema",
+  "description": "Foundational meta-schema for span-grounded JSON field extraction in Bangla transactional documents.",
+  "definitions": {
+    "SourceSpan": {
+      "type": ["object", "null"],
+      "description": "Character-level span grounding into raw OCR text",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "0-indexed character start position in raw OCR text"
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "0-indexed character end position (exclusive) in raw OCR text"
+        },
+        "text": {
+          "type": "string",
+          "description": "Verbatim substring extracted from OCR text at slice [start:end]"
+        }
+      },
+      "required": ["start", "end", "text"]
+    },
+    "FieldString": {
+      "type": "object",
+      "description": "Grounded string entity",
+      "properties": {
+        "value": {
+          "type": ["string", "null"],
+          "description": "Normalized field value, or null if absent/unreadable"
+        },
+        "source_span": {
+          "$ref": "#/definitions/SourceSpan"
+        }
+      },
+      "required": ["value", "source_span"]
+    },
+    "FieldNumber": {
+      "type": "object",
+      "description": "Grounded numeric entity (amount, units, charges)",
+      "properties": {
+        "value": {
+          "type": ["number", "null"],
+          "description": "Normalized numeric value in standard Western float/integer, or null if absent"
+        },
+        "source_span": {
+          "$ref": "#/definitions/SourceSpan"
+        }
+      },
+      "required": ["value", "source_span"]
+    }
+  }
+}

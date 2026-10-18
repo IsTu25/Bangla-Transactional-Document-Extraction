@@ -1,0 +1,301 @@
+{
+  "total_failures_mined": 1233,
+  "failure_clusters": {
+    "VALUE_SPAN_MISMATCH": 552,
+    "HALLUCINATED": 226,
+    "WRONG_SPAN": 222,
+    "MISSING_FIELD": 233
+  },
+  "top_failing_fields": {
+    "date_time": {
+      "HALLUCINATED": 12,
+      "VALUE_SPAN_MISMATCH": 164,
+      "MISSING_FIELD": 12,
+      "WRONG_SPAN": 12
+    },
+    "due_date": {
+      "VALUE_SPAN_MISMATCH": 85,
+      "MISSING_FIELD": 3,
+      "HALLUCINATED": 8,
+      "WRONG_SPAN": 4
+    },
+    "issue_date": {
+      "VALUE_SPAN_MISMATCH": 84,
+      "WRONG_SPAN": 4,
+      "HALLUCINATED": 8,
+      "MISSING_FIELD": 4
+    },
+    "payable_after_due_date": {
+      "VALUE_SPAN_MISMATCH": 19,
+      "MISSING_FIELD": 9,
+      "WRONG_SPAN": 9,
+      "HALLUCINATED": 5
+    },
+    "vat_tax": {
+      "WRONG_SPAN": 7,
+      "VALUE_SPAN_MISMATCH": 20,
+      "MISSING_FIELD": 9,
+      "HALLUCINATED": 4
+    },
+    "total_payable_amount": {
+      "HALLUCINATED": 7,
+      "VALUE_SPAN_MISMATCH": 18,
+      "WRONG_SPAN": 9,
+      "MISSING_FIELD": 6
+    },
+    "payment_method": {
+      "WRONG_SPAN": 13,
+      "VALUE_SPAN_MISMATCH": 6,
+      "MISSING_FIELD": 6,
+      "HALLUCINATED": 6
+    },
+    "customer_account_no": {
+      "HALLUCINATED": 6,
+      "VALUE_SPAN_MISMATCH": 10,
+      "MISSING_FIELD": 5,
+      "WRONG_SPAN": 10
+    },
+    "customer_name": {
+      "VALUE_SPAN_MISMATCH": 7,
+      "HALLUCINATED": 8,
+      "MISSING_FIELD": 12,
+      "WRONG_SPAN": 3
+    },
+    "mfs_provider": {
+      "VALUE_SPAN_MISMATCH": 7,
+      "HALLUCINATED": 11,
+      "WRONG_SPAN": 8,
+      "MISSING_FIELD": 4
+    }
+  },
+  "breakdown_by_doc_type": {
+    "utility_bill": {
+      "VALUE_SPAN_MISMATCH": 276,
+      "HALLUCINATED": 87,
+      "MISSING_FIELD": 84,
+      "WRONG_SPAN": 75
+    },
+    "shop_invoice": {
+      "HALLUCINATED": 71,
+      "WRONG_SPAN": 75,
+      "MISSING_FIELD": 79,
+      "VALUE_SPAN_MISMATCH": 126
+    },
+    "mfs_receipt": {
+      "WRONG_SPAN": 72,
+      "VALUE_SPAN_MISMATCH": 150,
+      "MISSING_FIELD": 70,
+      "HALLUCINATED": 68
+    }
+  },
+  "sampled_failure_examples": {
+    "VALUE_SPAN_MISMATCH": [
+      {
+        "doc_id": "syn_util_0192",
+        "doc_type": "utility_bill",
+        "field_name": "customer_name",
+        "failure_type": "VALUE_SPAN_MISMATCH",
+        "score": 0.4,
+        "predicted_value": "ফারহানা ইয়াসমিন (corrupted)",
+        "gold_value": "ফারহানা ইয়াসমিন",
+        "notes": "Predicted 'ফারহানা ইয়াসমিন (corrupted)' does not match gold value 'ফারহানা ইয়াসমিন'."
+      },
+      {
+        "doc_id": "syn_util_0192",
+        "doc_type": "utility_bill",
+        "field_name": "due_date",
+        "failure_type": "VALUE_SPAN_MISMATCH",
+        "score": 0.2,
+        "predicted_value": "2024-02-16 (corrupted)",
+        "gold_value": "2024-02-16",
+        "notes": "Value '2024-02-16 (corrupted)' cannot be derived from span text '১৬/0২/২০২৪'."
+      },
+      {
+        "doc_id": "syn_util_0192",
+        "doc_type": "utility_bill",
+        "field_name": "issue_date",
+        "failure_type": "VALUE_SPAN_MISMATCH",
+        "score": 0.2,
+        "predicted_value": "2024-02-04",
+        "gold_value": "2024-02-04",
+        "notes": "Value '2024-02-04' cannot be derived from span text '0৪/0২/২০২৪'."
+      },
+      {
+        "doc_id": "syn_shop_0176",
+        "doc_type": "shop_invoice",
+        "field_name": "date_time",
+        "failure_type": "VALUE_SPAN_MISMATCH",
+        "score": 0.2,
+        "predicted_value": "2024-12-27 09:42",
+        "gold_value": "2024-12-27 09:42",
+        "notes": "Value '2024-12-27 09:42' cannot be derived from span text '২৭/১২/২০২৪ 0৯:৪২'."
+      },
+      {
+        "doc_id": "syn_mfs_0271",
+        "doc_type": "mfs_receipt",
+        "field_name": "date_time",
+        "failure_type": "VALUE_SPAN_MISMATCH",
+        "score": 0.2,
+        "predicted_value": "2024-06-06 16:49 (corrupted)",
+        "gold_value": "2024-06-06 16:49",
+        "notes": "Value '2024-06-06 16:49 (corrupted)' cannot be derived from span text '0৬/0৬/২০২৪ ১৬:৪৯'."
+      }
+    ],
+    "HALLUCINATED": [
+      {
+        "doc_id": "syn_shop_0011",
+        "doc_type": "shop_invoice",
+        "field_name": "customer_identifier",
+        "failure_type": "HALLUCINATED",
+        "score": 0.0,
+        "predicted_value": "FAKE_8702",
+        "gold_value": "01355130224",
+        "notes": "Value was generated without any source span grounding."
+      },
+      {
+        "doc_id": "syn_shop_0011",
+        "doc_type": "shop_invoice",
+        "field_name": "date_time",
+        "failure_type": "HALLUCINATED",
+        "score": 0.0,
+        "predicted_value": "FAKE_5640",
+        "gold_value": "2024-01-15 17:36",
+        "notes": "Value was generated without any source span grounding."
+      },
+      {
+        "doc_id": "syn_shop_0011",
+        "doc_type": "shop_invoice",
+        "field_name": "store_name",
+        "failure_type": "HALLUCINATED",
+        "score": 0.0,
+        "predicted_value": "FAKE_3891",
+        "gold_value": "প্রিন্স বাজার",
+        "notes": "Value was generated without any source span grounding."
+      },
+      {
+        "doc_id": "syn_shop_0011",
+        "doc_type": "shop_invoice",
+        "field_name": "total_payable",
+        "failure_type": "HALLUCINATED",
+        "score": 0.0,
+        "predicted_value": "FAKE_6008",
+        "gold_value": 1875.3,
+        "notes": "Value was generated without any source span grounding."
+      },
+      {
+        "doc_id": "syn_util_0138",
+        "doc_type": "utility_bill",
+        "field_name": "bill_month",
+        "failure_type": "HALLUCINATED",
+        "score": 0.0,
+        "predicted_value": "FAKE_5821",
+        "gold_value": "ডিসেম্বর ২০২৪",
+        "notes": "Value was generated without any source span grounding."
+      }
+    ],
+    "WRONG_SPAN": [
+      {
+        "doc_id": "syn_shop_0011",
+        "doc_type": "shop_invoice",
+        "field_name": "payment_method",
+        "failure_type": "WRONG_SPAN",
+        "score": 0.2,
+        "predicted_value": "ক্রেডিট কার্ড",
+        "gold_value": "ক্রেডিট কার্ড",
+        "notes": "Offset [411:420] slices 'েডিট কার্', expected 'ক্রেডিট কার্ড'."
+      },
+      {
+        "doc_id": "syn_shop_0011",
+        "doc_type": "shop_invoice",
+        "field_name": "store_address",
+        "failure_type": "WRONG_SPAN",
+        "score": 0.2,
+        "predicted_value": "মোহাম্মদপুর, ঢাকা",
+        "gold_value": "মোহাম্মদপুর, ঢাকা",
+        "notes": "Offset [12:29] slices 'র (মোহাম্মদপুর, ঢ', expected 'মোহাম্মদপুর, ঢাকা'."
+      },
+      {
+        "doc_id": "syn_shop_0176",
+        "doc_type": "shop_invoice",
+        "field_name": "payment_method",
+        "failure_type": "WRONG_SPAN",
+        "score": 0.2,
+        "predicted_value": "নগদ",
+        "gold_value": "নগদ",
+        "notes": "Offset [376:381] slices 'তি: ন', expected 'নগদ'."
+      },
+      {
+        "doc_id": "syn_shop_0176",
+        "doc_type": "shop_invoice",
+        "field_name": "vat_tax_amount",
+        "failure_type": "WRONG_SPAN",
+        "score": 0.2,
+        "predicted_value": 83.4,
+        "gold_value": 83.4,
+        "notes": "Offset [322:332] slices ' ৮৩.৪০ টাক', expected '৮৩.৪০ টাকা'."
+      },
+      {
+        "doc_id": "syn_mfs_0271",
+        "doc_type": "mfs_receipt",
+        "field_name": "charge_fee",
+        "failure_type": "WRONG_SPAN",
+        "score": 0.2,
+        "predicted_value": 185.0,
+        "gold_value": 185.0,
+        "notes": "Offset [181:186] slices '.0০\nস', expected '১৮৫.0০'."
+      }
+    ],
+    "MISSING_FIELD": [
+      {
+        "doc_id": "syn_shop_0176",
+        "doc_type": "shop_invoice",
+        "field_name": "cashier_terminal",
+        "failure_type": "MISSING_FIELD",
+        "score": 0.0,
+        "predicted_value": null,
+        "gold_value": "কাউন্টার-৪",
+        "notes": "Predicted null, but ground truth has a value."
+      },
+      {
+        "doc_id": "syn_mfs_0271",
+        "doc_type": "mfs_receipt",
+        "field_name": "reference",
+        "failure_type": "MISSING_FIELD",
+        "score": 0.0,
+        "predicted_value": null,
+        "gold_value": "ফোন বিল",
+        "notes": "Predicted null, but ground truth has a value."
+      },
+      {
+        "doc_id": "syn_util_0138",
+        "doc_type": "utility_bill",
+        "field_name": "customer_address",
+        "failure_type": "MISSING_FIELD",
+        "score": 0.0,
+        "predicted_value": null,
+        "gold_value": "কাজীপাড়া, মিরপুর, ঢাকা-১২১৬",
+        "notes": "Predicted null, but ground truth has a value."
+      },
+      {
+        "doc_id": "syn_util_0195",
+        "doc_type": "utility_bill",
+        "field_name": "current_charge",
+        "failure_type": "MISSING_FIELD",
+        "score": 0.0,
+        "predicted_value": null,
+        "gold_value": 3592.0,
+        "notes": "Predicted null, but ground truth has a value."
+      },
+      {
+        "doc_id": "syn_util_0195",
+        "doc_type": "utility_bill",
+        "field_name": "customer_name",
+        "failure_type": "MISSING_FIELD",
+        "score": 0.0,
+        "predicted_value": null,
+        "gold_value": "আবু সাইদ",
+        "notes": "Predicted null, but ground truth has a value."
+      }
+    ]
+  }
+}

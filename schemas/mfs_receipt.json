@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mfs_receipt.json",
+  "title": "BanglaMFSReceiptSchema",
+  "description": "Schema for extracting span-grounded key information from Bangla Mobile Financial Services receipts (bKash, Nagad, Rocket, Upay, Cellfin).",
+  "type": "object",
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "enum": ["mfs_receipt"]
+    },
+    "mfs_provider": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "MFS platform name (bKash/বিকাশ, Nagad/নগদ, Rocket/রকেট, Upay/উপায়)"
+    },
+    "transaction_type": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Type of transaction (Send Money, Cash Out, Merchant Payment, Mobile Recharge, Bill Pay)"
+    },
+    "transaction_id": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Unique transaction identifier (e.g. TrxID BL7492ABCD, 71649231)"
+    },
+    "sender_number": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Source phone / wallet number (often masked or standard 11 digits)"
+    },
+    "recipient_number": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Destination phone / merchant / agent wallet number"
+    },
+    "recipient_name": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Name of recipient / merchant if present"
+    },
+    "amount": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Base transaction amount transferred/paid in BDT"
+    },
+    "charge_fee": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Transaction convenience / service charge in BDT"
+    },
+    "total_amount": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Total amount debited from sender wallet in BDT"
+    },
+    "date_time": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Transaction timestamp (e.g., 17/10/2024 10:25 PM)"
+    },
+    "new_balance": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Updated remaining balance after transaction"
+    },
+    "reference": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "User reference text or transaction memo"
+    }
+  },
+  "required": [
+    "document_type",
+    "mfs_provider",
+    "transaction_type",
+    "transaction_id",
+    "total_amount"
+  ]
+}

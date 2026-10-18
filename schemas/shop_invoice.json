@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "shop_invoice.json",
+  "title": "BanglaShopInvoiceSchema",
+  "description": "Schema for extracting span-grounded key information from Bangla shop invoices, supermarket POS receipts (Shwapno, Agora, Chaldal, local retail).",
+  "type": "object",
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "enum": ["shop_invoice"]
+    },
+    "store_name": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Store or merchant commercial trade name"
+    },
+    "store_address": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Physical branch or outlet address"
+    },
+    "invoice_number": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Tax invoice / receipt sequence number"
+    },
+    "date_time": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Invoice creation date and timestamp"
+    },
+    "cashier_terminal": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "POS counter or cashier ID"
+    },
+    "customer_identifier": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Customer phone, loyalty card, or member name if captured"
+    },
+    "subtotal": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Sum of line items before discounts and taxes"
+    },
+    "vat_tax_amount": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Applicable Mushak / VAT amount in BDT"
+    },
+    "discount_amount": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Promotional or loyalty discount deducted in BDT"
+    },
+    "total_payable": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Grand total payable amount in BDT"
+    },
+    "payment_method": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Tender type (Cash / নগদ, Card / কার্ড, bKash / বিকাশ, etc.)"
+    },
+    "line_items": {
+      "type": "array",
+      "description": "List of purchased products/goods with span grounding",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_name": {
+            "$ref": "meta_schema.json#/definitions/FieldString"
+          },
+          "quantity": {
+            "$ref": "meta_schema.json#/definitions/FieldNumber"
+          },
+          "unit_price": {
+            "$ref": "meta_schema.json#/definitions/FieldNumber"
+          },
+          "total_price": {
+            "$ref": "meta_schema.json#/definitions/FieldNumber"
+          }
+        },
+        "required": ["item_name", "total_price"]
+      }
+    }
+  },
+  "required": [
+    "document_type",
+    "store_name",
+    "invoice_number",
+    "date_time",
+    "total_payable"
+  ]
+}

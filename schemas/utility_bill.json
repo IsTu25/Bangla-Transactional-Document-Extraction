@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "utility_bill.json",
+  "title": "BanglaUtilityBillSchema",
+  "description": "Schema for extracting span-grounded key information from Bangla utility bills (electricity, gas, water: DESCO, DPDC, TITAS, NESCO, WASA).",
+  "type": "object",
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "enum": ["utility_bill"]
+    },
+    "biller_name": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Name of utility agency (e.g., ডেসকো, ডিপিডিসি, তিতাস গ্যাস, নেসকো, ওয়াসা)"
+    },
+    "customer_account_no": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Customer Account / Consumer / Bill Number"
+    },
+    "meter_number": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Physical meter serial number"
+    },
+    "bill_month": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Billing cycle month and year (e.g., জুলাই ২০২৪ / October 2024)"
+    },
+    "issue_date": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Bill issue date (standardized YYYY-MM-DD or DD/MM/YYYY)"
+    },
+    "due_date": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Last payment due date without surcharge"
+    },
+    "total_units_consumed": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Total electricity/gas units consumed during billing period"
+    },
+    "current_charge": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Current month charge in BDT before taxes and surcharges"
+    },
+    "vat_tax": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Government VAT/Tax charge amount"
+    },
+    "late_surcharge": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Late payment penalty / surcharge fee"
+    },
+    "total_payable_amount": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Net payable amount within due date in BDT"
+    },
+    "payable_after_due_date": {
+      "$ref": "meta_schema.json#/definitions/FieldNumber",
+      "description": "Net payable amount after due date including late surcharge"
+    },
+    "customer_name": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Registered subscriber / customer name"
+    },
+    "customer_address": {
+      "$ref": "meta_schema.json#/definitions/FieldString",
+      "description": "Premises / billing address"
+    }
+  },
+  "required": [
+    "document_type",
+    "biller_name",
+    "customer_account_no",
+    "due_date",
+    "total_payable_amount"
+  ]
+}

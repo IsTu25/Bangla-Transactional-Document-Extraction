@@ -1,0 +1,20 @@
+{
+  "num_evaluated_documents": 3,
+  "json_validity_rate": 1.0,
+  "schema_conformance_rate": 1.0,
+  "mean_verifier_score": 0.9219,
+  "macro_field_f1": 0.9487,
+  "precision": 0.9024,
+  "recall": 1.0,
+  "anls": 1.0,
+  "strict_span_grounding_rate": 0.9024,
+  "hallucination_rate": 0.0,
+  "taxonomy_breakdown": {
+    "valid": 37,
+    "wrong_span": 0,
+    "hallucinated": 0,
+    "value_span_mismatch": 4,
+    "missing_field": 0,
+    "total_fields": 41
+  }
+}

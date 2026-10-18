@@ -1,0 +1,547 @@
+[
+  {
+    "doc_id": "syn_util_7166",
+    "document_type": "utility_bill",
+    "ocr_text": "ঢাকা ওয়াসা (DWASA)\nগ্রাহক বিল বিবরণী - সেপ্টেম্বর ২০২৪\nগ্রাহক হিসাব নম্বর: ৬৫৯৩৮৭৩১\nমিটার নং: MTR-৮৬২০৭৭\nগ্রাহকের নাম: ফারহানা ইয়াসমিন\nঠিকানা: বনানী, ব্লক ডি, ঢাকা\nইস্যু তারিখ: ০৫/০৯/২০২৪\nবিল পরিশোধের শেষ তারিখ: ২৫/০৯/২০২৪\nমোট ব্যবহৃত ইউনিট: ৫১৭\nসর্বমোট প্রদেয় টাকা: ৳ ৪০৭১/=\nবিলম্ব মাসুলসহ প্রদেয়: ৪২২১.০০ টাকা\n",
+    "ground_truth": {
+      "document_type": "utility_bill",
+      "biller_name": {
+        "value": "ঢাকা ওয়াসা",
+        "source_span": {
+          "start": 0,
+          "end": 11,
+          "text": "ঢাকা ওয়াসা"
+        }
+      },
+      "customer_account_no": {
+        "value": "65938731",
+        "source_span": {
+          "start": 76,
+          "end": 84,
+          "text": "৬৫৯৩৮৭৩১"
+        }
+      },
+      "meter_number": {
+        "value": "MTR-৮৬২০৭৭",
+        "source_span": {
+          "start": 95,
+          "end": 105,
+          "text": "MTR-৮৬২০৭৭"
+        }
+      },
+      "bill_month": {
+        "value": "সেপ্টেম্বর ২০২৪",
+        "source_span": {
+          "start": 40,
+          "end": 55,
+          "text": "সেপ্টেম্বর ২০২৪"
+        }
+      },
+      "issue_date": {
+        "value": "2024-09-05",
+        "source_span": {
+          "start": 179,
+          "end": 189,
+          "text": "০৫/০৯/২০২৪"
+        }
+      },
+      "due_date": {
+        "value": "2024-09-25",
+        "source_span": {
+          "start": 214,
+          "end": 224,
+          "text": "২৫/০৯/২০২৪"
+        }
+      },
+      "total_units_consumed": {
+        "value": 517.0,
+        "source_span": {
+          "start": 244,
+          "end": 247,
+          "text": "৫১৭"
+        }
+      },
+      "current_charge": {
+        "value": 3877.5,
+        "source_span": null
+      },
+      "vat_tax": {
+        "value": 193.88,
+        "source_span": null
+      },
+      "late_surcharge": {
+        "value": 150.0,
+        "source_span": null
+      },
+      "total_payable_amount": {
+        "value": 4071.0,
+        "source_span": {
+          "start": 272,
+          "end": 276,
+          "text": "৪০৭১"
+        }
+      },
+      "payable_after_due_date": {
+        "value": 4221.0,
+        "source_span": {
+          "start": 303,
+          "end": 310,
+          "text": "৪২২১.০০"
+        }
+      },
+      "customer_name": {
+        "value": "ফারহানা ইয়াসমিন",
+        "source_span": {
+          "start": 120,
+          "end": 136,
+          "text": "ফারহানা ইয়াসমিন"
+        }
+      },
+      "customer_address": {
+        "value": "বনানী, ব্লক ডি, ঢাকা",
+        "source_span": {
+          "start": 145,
+          "end": 165,
+          "text": "বনানী, ব্লক ডি, ঢাকা"
+        }
+      }
+    },
+    "targeted_failure_remedy": "VALUE_SPAN_MISMATCH"
+  },
+  {
+    "doc_id": "syn_util_4686",
+    "document_type": "utility_bill",
+    "ocr_text": "নেসকো (NESCO)\nগ্রাহক বিল বিবরণী - সেপ্টেম্বর ২০২৪\nগ্রাহক হিসাব নম্বর: ৯০৯৯০৬৪২\nমিটার নং: MTR-৮৮০০৭৬\nগ্রাহকের নাম: সুমাইয়া আক্তার\nঠিকানা: মিরপুর-১০, ঢাকা\nইস্যু তারিখ: ০৫/০৯/২০২৪\nবিল পরিশোধের শেষ তারিখ: ২৫/০৯/২০২৪\nমোট ব্যবহৃত ইউনিট: ৬০৯\nসর্বমোট প্রদেয় টাকা: ৳ ৪৭৯৫/=\nবিলম্ব মাসুলসহ প্রদেয়: ৪৯৪৫.০০ টাকা\n",
+    "ground_truth": {
+      "document_type": "utility_bill",
+      "biller_name": {
+        "value": "নেসকো",
+        "source_span": {
+          "start": 0,
+          "end": 5,
+          "text": "নেসকো"
+        }
+      },
+      "customer_account_no": {
+        "value": "90990642",
+        "source_span": {
+          "start": 70,
+          "end": 78,
+          "text": "৯০৯৯০৬৪২"
+        }
+      },
+      "meter_number": {
+        "value": "MTR-৮৮০০৭৬",
+        "source_span": {
+          "start": 89,
+          "end": 99,
+          "text": "MTR-৮৮০০৭৬"
+        }
+      },
+      "bill_month": {
+        "value": "সেপ্টেম্বর ২০২৪",
+        "source_span": {
+          "start": 34,
+          "end": 49,
+          "text": "সেপ্টেম্বর ২০২৪"
+        }
+      },
+      "issue_date": {
+        "value": "2024-09-05",
+        "source_span": {
+          "start": 167,
+          "end": 177,
+          "text": "০৫/০৯/২০২৪"
+        }
+      },
+      "due_date": {
+        "value": "2024-09-25",
+        "source_span": {
+          "start": 202,
+          "end": 212,
+          "text": "২৫/০৯/২০২৪"
+        }
+      },
+      "total_units_consumed": {
+        "value": 609.0,
+        "source_span": {
+          "start": 232,
+          "end": 235,
+          "text": "৬০৯"
+        }
+      },
+      "current_charge": {
+        "value": 4567.5,
+        "source_span": null
+      },
+      "vat_tax": {
+        "value": 228.38,
+        "source_span": null
+      },
+      "late_surcharge": {
+        "value": 150.0,
+        "source_span": null
+      },
+      "total_payable_amount": {
+        "value": 4795.0,
+        "source_span": {
+          "start": 260,
+          "end": 264,
+          "text": "৪৭৯৫"
+        }
+      },
+      "payable_after_due_date": {
+        "value": 4945.0,
+        "source_span": {
+          "start": 291,
+          "end": 298,
+          "text": "৪৯৪৫.০০"
+        }
+      },
+      "customer_name": {
+        "value": "সুমাইয়া আক্তার",
+        "source_span": {
+          "start": 114,
+          "end": 129,
+          "text": "সুমাইয়া আক্তার"
+        }
+      },
+      "customer_address": {
+        "value": "মিরপুর-১০, ঢাকা",
+        "source_span": {
+          "start": 138,
+          "end": 153,
+          "text": "মিরপুর-১০, ঢাকা"
+        }
+      }
+    },
+    "targeted_failure_remedy": "VALUE_SPAN_MISMATCH"
+  },
+  {
+    "doc_id": "syn_util_3027",
+    "document_type": "utility_bill",
+    "ocr_text": "ডিপিডিসি (DPDC)\nগ্রাহক বিল বিবরণী - সেপ্টেম্বর ২০২৪\nগ্রাহক হিসাব নম্বর: ৩৬৯৪৫৪৮৫\nমিটার নং: MTR-১৫১৮৭২\nগ্রাহকের নাম: সুমাইয়া আক্তার\nঠিকানা: উত্তরা সেক্টর ৭, ঢাকা\nইস্যু তারিখ: ০৫/০৯/২০২৪\nবিল পরিশোধের শেষ তারিখ: ২৫/০৯/২০২৪\nমোট ব্যবহৃত ইউনিট: ৬১৪\nসর্বমোট প্রদেয় টাকা: ৳ ৪৮৩৫/=\nবিলম্ব মাসুলসহ প্রদেয়: ৪৯৮৫.০০ টাকা\n",
+    "ground_truth": {
+      "document_type": "utility_bill",
+      "biller_name": {
+        "value": "ডিপিডিসি",
+        "source_span": {
+          "start": 0,
+          "end": 8,
+          "text": "ডিপিডিসি"
+        }
+      },
+      "customer_account_no": {
+        "value": "36945485",
+        "source_span": {
+          "start": 72,
+          "end": 80,
+          "text": "৩৬৯৪৫৪৮৫"
+        }
+      },
+      "meter_number": {
+        "value": "MTR-১৫১৮৭২",
+        "source_span": {
+          "start": 91,
+          "end": 101,
+          "text": "MTR-১৫১৮৭২"
+        }
+      },
+      "bill_month": {
+        "value": "সেপ্টেম্বর ২০২৪",
+        "source_span": {
+          "start": 36,
+          "end": 51,
+          "text": "সেপ্টেম্বর ২০২৪"
+        }
+      },
+      "issue_date": {
+        "value": "2024-09-05",
+        "source_span": {
+          "start": 175,
+          "end": 185,
+          "text": "০৫/০৯/২০২৪"
+        }
+      },
+      "due_date": {
+        "value": "2024-09-25",
+        "source_span": {
+          "start": 210,
+          "end": 220,
+          "text": "২৫/০৯/২০২৪"
+        }
+      },
+      "total_units_consumed": {
+        "value": 614.0,
+        "source_span": {
+          "start": 240,
+          "end": 243,
+          "text": "৬১৪"
+        }
+      },
+      "current_charge": {
+        "value": 4605.0,
+        "source_span": null
+      },
+      "vat_tax": {
+        "value": 230.25,
+        "source_span": null
+      },
+      "late_surcharge": {
+        "value": 150.0,
+        "source_span": null
+      },
+      "total_payable_amount": {
+        "value": 4835.0,
+        "source_span": {
+          "start": 268,
+          "end": 272,
+          "text": "৪৮৩৫"
+        }
+      },
+      "payable_after_due_date": {
+        "value": 4985.0,
+        "source_span": {
+          "start": 299,
+          "end": 306,
+          "text": "৪৯৮৫.০০"
+        }
+      },
+      "customer_name": {
+        "value": "সুমাইয়া আক্তার",
+        "source_span": {
+          "start": 116,
+          "end": 131,
+          "text": "সুমাইয়া আক্তার"
+        }
+      },
+      "customer_address": {
+        "value": "উত্তরা সেক্টর ৭, ঢাকা",
+        "source_span": {
+          "start": 140,
+          "end": 161,
+          "text": "উত্তরা সেক্টর ৭, ঢাকা"
+        }
+      }
+    },
+    "targeted_failure_remedy": "VALUE_SPAN_MISMATCH"
+  },
+  {
+    "doc_id": "syn_util_1354",
+    "document_type": "utility_bill",
+    "ocr_text": "ডিপিডিসি (DPDC)\nগ্রাহক বিল বিবরণী - সেপ্টেম্বর ২০২৪\nগ্রাহক হিসাব নম্বর: ৫৫১৫২৯১০\nমিটার নং: MTR-৭৩১৩৭০\nগ্রাহকের নাম: মাহমুদুল হাসান\nঠিকানা: উপশহর, রাজশাহী\nইস্যু তারিখ: ০৫/০৯/২০২৪\nবিল পরিশোধের শেষ তারিখ: ২৫/০৯/২০২৪\nমোট ব্যবহৃত ইউনিট: ৪৮৭\nসর্বমোট প্রদেয় টাকা: ৳ ৩৮৩৫/=\nবিলম্ব মাসুলসহ প্রদেয়: ৩৯৮৫.০০ টাকা\n",
+    "ground_truth": {
+      "document_type": "utility_bill",
+      "biller_name": {
+        "value": "ডিপিডিসি",
+        "source_span": {
+          "start": 0,
+          "end": 8,
+          "text": "ডিপিডিসি"
+        }
+      },
+      "customer_account_no": {
+        "value": "55152910",
+        "source_span": {
+          "start": 72,
+          "end": 80,
+          "text": "৫৫১৫২৯১০"
+        }
+      },
+      "meter_number": {
+        "value": "MTR-৭৩১৩৭০",
+        "source_span": {
+          "start": 91,
+          "end": 101,
+          "text": "MTR-৭৩১৩৭০"
+        }
+      },
+      "bill_month": {
+        "value": "সেপ্টেম্বর ২০২৪",
+        "source_span": {
+          "start": 36,
+          "end": 51,
+          "text": "সেপ্টেম্বর ২০২৪"
+        }
+      },
+      "issue_date": {
+        "value": "2024-09-05",
+        "source_span": {
+          "start": 167,
+          "end": 177,
+          "text": "০৫/০৯/২০২৪"
+        }
+      },
+      "due_date": {
+        "value": "2024-09-25",
+        "source_span": {
+          "start": 202,
+          "end": 212,
+          "text": "২৫/০৯/২০২৪"
+        }
+      },
+      "total_units_consumed": {
+        "value": 487.0,
+        "source_span": {
+          "start": 232,
+          "end": 235,
+          "text": "৪৮৭"
+        }
+      },
+      "current_charge": {
+        "value": 3652.5,
+        "source_span": null
+      },
+      "vat_tax": {
+        "value": 182.62,
+        "source_span": null
+      },
+      "late_surcharge": {
+        "value": 150.0,
+        "source_span": null
+      },
+      "total_payable_amount": {
+        "value": 3835.0,
+        "source_span": {
+          "start": 260,
+          "end": 264,
+          "text": "৩৮৩৫"
+        }
+      },
+      "payable_after_due_date": {
+        "value": 3985.0,
+        "source_span": {
+          "start": 291,
+          "end": 298,
+          "text": "৩৯৮৫.০০"
+        }
+      },
+      "customer_name": {
+        "value": "মাহমুদুল হাসান",
+        "source_span": {
+          "start": 116,
+          "end": 130,
+          "text": "মাহমুদুল হাসান"
+        }
+      },
+      "customer_address": {
+        "value": "উপশহর, রাজশাহী",
+        "source_span": {
+          "start": 139,
+          "end": 153,
+          "text": "উপশহর, রাজশাহী"
+        }
+      }
+    },
+    "targeted_failure_remedy": "VALUE_SPAN_MISMATCH"
+  },
+  {
+    "doc_id": "syn_util_1828",
+    "document_type": "utility_bill",
+    "ocr_text": "নেসকো (NESCO)\nগ্রাহক বিল বিবরণী - সেপ্টেম্বর ২০২৪\nগ্রাহক হিসাব নম্বর: ২০২০০৫৩৫\nমিটার নং: MTR-৪৮১৫৮৩\nগ্রাহকের নাম: আব্দুল কাদের\nঠিকানা: উত্তরা সেক্টর ৭, ঢাকা\nইস্যু তারিখ: ০৫/০৯/২০২৪\nবিল পরিশোধের শেষ তারিখ: ২৫/০৯/২০২৪\nমোট ব্যবহৃত ইউনিট: ৫৪০\nসর্বমোট প্রদেয় টাকা: ৳ ৪২৫২/=\nবিলম্ব মাসুলসহ প্রদেয়: ৪৪০২.০০ টাকা\n",
+    "ground_truth": {
+      "document_type": "utility_bill",
+      "biller_name": {
+        "value": "নেসকো",
+        "source_span": {
+          "start": 0,
+          "end": 5,
+          "text": "নেসকো"
+        }
+      },
+      "customer_account_no": {
+        "value": "20200535",
+        "source_span": {
+          "start": 70,
+          "end": 78,
+          "text": "২০২০০৫৩৫"
+        }
+      },
+      "meter_number": {
+        "value": "MTR-৪৮১৫৮৩",
+        "source_span": {
+          "start": 89,
+          "end": 99,
+          "text": "MTR-৪৮১৫৮৩"
+        }
+      },
+      "bill_month": {
+        "value": "সেপ্টেম্বর ২০২৪",
+        "source_span": {
+          "start": 34,
+          "end": 49,
+          "text": "সেপ্টেম্বর ২০২৪"
+        }
+      },
+      "issue_date": {
+        "value": "2024-09-05",
+        "source_span": {
+          "start": 170,
+          "end": 180,
+          "text": "০৫/০৯/২০২৪"
+        }
+      },
+      "due_date": {
+        "value": "2024-09-25",
+        "source_span": {
+          "start": 205,
+          "end": 215,
+          "text": "২৫/০৯/২০২৪"
+        }
+      },
+      "total_units_consumed": {
+        "value": 540.0,
+        "source_span": {
+          "start": 235,
+          "end": 238,
+          "text": "৫৪০"
+        }
+      },
+      "current_charge": {
+        "value": 4050.0,
+        "source_span": null
+      },
+      "vat_tax": {
+        "value": 202.5,
+        "source_span": null
+      },
+      "late_surcharge": {
+        "value": 150.0,
+        "source_span": null
+      },
+      "total_payable_amount": {
+        "value": 4252.0,
+        "source_span": {
+          "start": 263,
+          "end": 267,
+          "text": "৪২৫২"
+        }
+      },
+      "payable_after_due_date": {
+        "value": 4402.0,
+        "source_span": {
+          "start": 294,
+          "end": 301,
+          "text": "৪৪০২.০০"
+        }
+      },
+      "customer_name": {
+        "value": "আব্দুল কাদের",
+        "source_span": {
+          "start": 114,
+          "end": 126,
+          "text": "আব্দুল কাদের"
+        }
+      },
+      "customer_address": {
+        "value": "উত্তরা সেক্টর ৭, ঢাকা",
+        "source_span": {
+          "start": 135,
+          "end": 156,
+          "text": "উত্তরা সেক্টর ৭, ঢাকা"
+        }
+      }
+    },
+    "targeted_failure_remedy": "VALUE_SPAN_MISMATCH"
+  }
+]
